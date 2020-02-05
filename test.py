@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\論文程式\2019.12.16-version.Fast\test.ui'
+# Form implementation generated from reading ui file 'd:\碩論程式\20119.12.16-640Fast -\test.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_CamShow(object):
     def setupUi(self, CamShow):
@@ -108,7 +106,7 @@ class Ui_CamShow(object):
         self.GrayCheck.setStyleSheet("")
         self.GrayCheck.setObjectName("GrayCheck")
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(940, 10, 231, 41))
+        self.label_8.setGeometry(QtCore.QRect(920, 10, 261, 41))
         self.label_8.setStyleSheet("font: 12pt \"Calibri\";")
         self.label_8.setObjectName("label_8")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -296,7 +294,7 @@ class Ui_CamShow(object):
         self.draw_3.setGeometry(QtCore.QRect(820, 520, 471, 301))
         self.draw_3.setObjectName("draw_3")
         self.label_21 = QtWidgets.QLabel(self.centralwidget)
-        self.label_21.setGeometry(QtCore.QRect(830, 460, 231, 51))
+        self.label_21.setGeometry(QtCore.QRect(890, 460, 261, 51))
         self.label_21.setStyleSheet("font: 12pt \"Calibri\";")
         self.label_21.setObjectName("label_21")
         self.label_22 = QtWidgets.QLabel(self.centralwidget)
@@ -304,35 +302,28 @@ class Ui_CamShow(object):
         self.label_22.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.label_22.setTextFormat(QtCore.Qt.AutoText)
         self.label_22.setObjectName("label_22")
-        self.FpsLCD = QtWidgets.QLCDNumber(self.centralwidget)
-        self.FpsLCD.setGeometry(QtCore.QRect(140, 530, 71, 31))
-        self.FpsLCD.setObjectName("FpsLCD")
         self.WidthLCD = QtWidgets.QLCDNumber(self.centralwidget)
-        self.WidthLCD.setGeometry(QtCore.QRect(300, 530, 71, 31))
+        self.WidthLCD.setGeometry(QtCore.QRect(100, 530, 71, 31))
         self.WidthLCD.setObjectName("WidthLCD")
         self.HeightLCD = QtWidgets.QLCDNumber(self.centralwidget)
-        self.HeightLCD.setGeometry(QtCore.QRect(390, 530, 71, 31))
+        self.HeightLCD.setGeometry(QtCore.QRect(190, 530, 71, 31))
         self.HeightLCD.setObjectName("HeightLCD")
-        self.label_27 = QtWidgets.QLabel(self.centralwidget)
-        self.label_27.setGeometry(QtCore.QRect(40, 530, 101, 31))
-        self.label_27.setStyleSheet("font: 1ㄅpt \"Calibri\";")
-        self.label_27.setObjectName("label_27")
         self.label_28 = QtWidgets.QLabel(self.centralwidget)
-        self.label_28.setGeometry(QtCore.QRect(230, 530, 71, 31))
+        self.label_28.setGeometry(QtCore.QRect(30, 530, 71, 31))
         self.label_28.setStyleSheet("font: 12pt \"Calibri\";")
         self.label_28.setObjectName("label_28")
         self.label_29 = QtWidgets.QLabel(self.centralwidget)
-        self.label_29.setGeometry(QtCore.QRect(370, 530, 21, 31))
+        self.label_29.setGeometry(QtCore.QRect(170, 530, 21, 31))
         self.label_29.setStyleSheet("font: 12pt \"Calibri\";")
         self.label_29.setObjectName("label_29")
         self.Btn_Log = QtWidgets.QPushButton(self.centralwidget)
-        self.Btn_Log.setGeometry(QtCore.QRect(1180, 480, 101, 31))
+        self.Btn_Log.setGeometry(QtCore.QRect(1160, 470, 101, 41))
         self.Btn_Log.setObjectName("Btn_Log")
         self.Avg_logout = QtWidgets.QLineEdit(self.centralwidget)
-        self.Avg_logout.setGeometry(QtCore.QRect(1130, 480, 41, 31))
+        self.Avg_logout.setGeometry(QtCore.QRect(390, 530, 41, 31))
         self.Avg_logout.setObjectName("Avg_logout")
         self.label_33 = QtWidgets.QLabel(self.centralwidget)
-        self.label_33.setGeometry(QtCore.QRect(1090, 460, 41, 51))
+        self.label_33.setGeometry(QtCore.QRect(310, 530, 71, 31))
         self.label_33.setObjectName("label_33")
         self.draw_2.raise_()
         self.ROIFm.raise_()
@@ -347,10 +338,8 @@ class Ui_CamShow(object):
         self.draw_3.raise_()
         self.label_21.raise_()
         self.label_22.raise_()
-        self.FpsLCD.raise_()
         self.WidthLCD.raise_()
         self.HeightLCD.raise_()
-        self.label_27.raise_()
         self.label_28.raise_()
         self.label_29.raise_()
         self.Btn_Log.raise_()
@@ -387,7 +376,7 @@ class Ui_CamShow(object):
         self.GrayCheck.setToolTip(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Gary</span></p></body></html>"))
         self.GrayCheck.setWhatsThis(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Gary</span></p></body></html>"))
         self.GrayCheck.setText(_translate("CamShow", "Gary"))
-        self.label_8.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; color:#8d4600;\">Sensor View Point</span></p></body></html>"))
+        self.label_8.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600; color:#8d4600;\">Sensor View Plot</span></p></body></html>"))
         self.label.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600; color:#ff0000;\">— R: </span></p><p><br/></p><p><span style=\" font-size:10pt;\"><br/></span></p></body></html>"))
         self.label_2.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600; color:#00ff00;\">— G:</span></p><p><span style=\" font-size:10pt;\"><br/></span></p></body></html>"))
         self.label_3.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600; color:#0000ff;\">— B:</span></p><p><span style=\" font-size:10pt;\"><br/></span></p></body></html>"))
@@ -415,12 +404,12 @@ class Ui_CamShow(object):
         self.label_48.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:9pt; font-weight:600;\">9:</span></p></body></html>"))
         self.label_49.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:9pt; font-weight:600;\">10:</span></p></body></html>"))
         self.label_17.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; color:#8d4600;\">Curve Fitting Plot</span></p></body></html>"))
-        self.label_21.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; color:#8d4600;\">Calibrated View Point</span></p></body></html>"))
+        self.label_21.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600; color:#8d4600;\">Calibrated View Plot</span></p></body></html>"))
         self.label_22.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-weight:600; color:#ffffff;\">— Gary:</span></p><p><span style=\" color:#ffffff;\"><br/></span></p></body></html>"))
-        self.label_27.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#550000;\">Frame Rate:</span></p></body></html>"))
         self.label_28.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#550000;\">Image:</span></p></body></html>"))
         self.label_29.setText(_translate("CamShow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#550000;\">X</span></p></body></html>"))
         self.Btn_Log.setToolTip(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600; color:#0000ff;\">匯出光譜數值</span></p></body></html>"))
         self.Btn_Log.setText(_translate("CamShow", "匯出光譜數值"))
-        self.label_33.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600; color:#0000ff;\">平均</span></p><p><span style=\" font-size:9pt; font-weight:600; color:#0000ff;\">次數:</span></p></body></html>"))
+        self.label_33.setText(_translate("CamShow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600; color:#0000ff;\">平均次數:</span></p></body></html>"))
+
 from pyqtgraph import PlotWidget
