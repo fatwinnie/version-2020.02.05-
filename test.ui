@@ -382,9 +382,9 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>940</x>
+      <x>920</x>
       <y>10</y>
-      <width>231</width>
+      <width>261</width>
       <height>41</height>
      </rect>
     </property>
@@ -392,7 +392,7 @@
      <string notr="true">font: 12pt &quot;Calibri&quot;;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#8d4600;&quot;&gt;Sensor View Point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#8d4600;&quot;&gt;Sensor View Plot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -1068,9 +1068,9 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QLabel" name="label_21">
     <property name="geometry">
      <rect>
-      <x>830</x>
+      <x>890</x>
       <y>460</y>
-      <width>231</width>
+      <width>261</width>
       <height>51</height>
      </rect>
     </property>
@@ -1078,7 +1078,7 @@ border-color: rgb(170, 85, 0);</string>
      <string notr="true">font: 12pt &quot;Calibri&quot;;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#8d4600;&quot;&gt;Calibrated View Point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#8d4600;&quot;&gt;Calibrated View Plot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_22">
@@ -1100,20 +1100,10 @@ border-color: rgb(170, 85, 0);</string>
      <enum>Qt::AutoText</enum>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="FpsLCD">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>530</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLCDNumber" name="WidthLCD">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>100</x>
       <y>530</y>
       <width>71</width>
       <height>31</height>
@@ -1123,33 +1113,17 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QLCDNumber" name="HeightLCD">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>190</x>
       <y>530</y>
       <width>71</width>
       <height>31</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_27">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>530</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 1ㄅpt &quot;Calibri&quot;;</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#550000;&quot;&gt;Frame Rate:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_28">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>30</x>
       <y>530</y>
       <width>71</width>
       <height>31</height>
@@ -1165,7 +1139,7 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QLabel" name="label_29">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>170</x>
       <y>530</y>
       <width>21</width>
       <height>31</height>
@@ -1181,10 +1155,10 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QPushButton" name="Btn_Log">
     <property name="geometry">
      <rect>
-      <x>1180</x>
-      <y>480</y>
+      <x>1160</x>
+      <y>470</y>
       <width>101</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="toolTip">
@@ -1197,8 +1171,8 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QLineEdit" name="Avg_logout">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>480</y>
+      <x>390</x>
+      <y>530</y>
       <width>41</width>
       <height>31</height>
      </rect>
@@ -1207,14 +1181,14 @@ border-color: rgb(170, 85, 0);</string>
    <widget class="QLabel" name="label_33">
     <property name="geometry">
      <rect>
-      <x>1090</x>
-      <y>460</y>
-      <width>41</width>
-      <height>51</height>
+      <x>310</x>
+      <y>530</y>
+      <width>71</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#0000ff;&quot;&gt;平均&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#0000ff;&quot;&gt;次數:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#0000ff;&quot;&gt;平均次數:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <zorder>draw_2</zorder>
@@ -1230,10 +1204,8 @@ border-color: rgb(170, 85, 0);</string>
    <zorder>draw_3</zorder>
    <zorder>label_21</zorder>
    <zorder>label_22</zorder>
-   <zorder>FpsLCD</zorder>
    <zorder>WidthLCD</zorder>
    <zorder>HeightLCD</zorder>
-   <zorder>label_27</zorder>
    <zorder>label_28</zorder>
    <zorder>label_29</zorder>
    <zorder>Btn_Log</zorder>
