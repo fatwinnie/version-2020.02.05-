@@ -23,8 +23,8 @@ class CamShow(QMainWindow,Ui_CamShow):
         self.Timer = QTimer(self)    
         self.CallBackFunctions()
         self._num = 0
-        self.getSave_arr = []
-        self.getPixel_arr = []     
+        self.getSave_arr = []      # 存放n筆的SavePixel_arr
+        self.getPixel_arr = []     # 存放n筆的Pixel_arr
         self.Timer.timeout.connect(self.TimerOutFun)       
         self.stopbt = 0
         #self.draw.plotItem.showGrid(True, True, 0.7)
@@ -125,7 +125,6 @@ class CamShow(QMainWindow,Ui_CamShow):
         self.camera.set(15,exposure_time)
 
           
-
     def StartCamera(self):
         self.ShowBt.setEnabled(False)
         self.StopBt.setEnabled(True)
@@ -194,11 +193,9 @@ class CamShow(QMainWindow,Ui_CamShow):
         self.Gray_resized = cv2.resize(self.GrayImg, dim, interpolation=cv2.INTER_AREA)
 
         if self.GrayCheck.isChecked():
-            #qimg = qimage2ndarray.array2qimage(self.GrayImg)
             qimg = qimage2ndarray.array2qimage(self.Gray_resized)
            
         else:
-            #CVimg = cv2.cvtColor(self.img, cv2.COLOR_BGR2RGB)
             CVimg = cv2.cvtColor(self.resized, cv2.COLOR_BGR2RGB)       
             qimg = qimage2ndarray.array2qimage(CVimg)
         
@@ -207,25 +204,22 @@ class CamShow(QMainWindow,Ui_CamShow):
 
 
     def CopyImg(self):
-        #ret=QRect(10,260,501,20) # QRect ( int left, int top, int width, int height )
+        #ret=QRect(10,260,501,20) # QRect(int x, int y, int width, int height)
         r = 490/2560
-        r2 = 1920 * r
+       
         #X = int(self.roi_X.text())
-        X2 = int(self.roi_X.text()) * r
+        X = int(self.roi_X.text()) * r
         #Y = int(self.roi_Y.text())
-        Y2 = int(self.roi_Y.text()) * r2
-        W = 2560-X
+        Y = int(self.roi_Y.text()) * r      
         #W = int(self.roi_Width.text())
-        H = int(self.roi_Height.text())
-        #ret = QRect(X,Y,W,H)
-        ret = QRect(X2,Y2,W,H)
-
+        W = 490 - X
+        H = int(self.roi_Height.text()) * r 
+        ret = QRect(X,Y,W,H)
+        
         if self.GrayCheck.isChecked():
-            #qimg = qimage2ndarray.array2qimage(self.GrayImg)
             qimg = qimage2ndarray.array2qimage(self.Gray_resized)
             
         else:
-            #CVimg = cv2.cvtColor(self.img,cv2.COLOR_BGR2RGB) 
             CVimg = cv2.cvtColor(self.resized,cv2.COLOR_BGR2RGB)       
             qimg = qimage2ndarray.array2qimage(CVimg)
 
@@ -252,7 +246,7 @@ class CamShow(QMainWindow,Ui_CamShow):
                 cv2.imwrite(image_name,self.img)
 
             
-        elif tag =='Record2':
+        elif tag =='Record':
             self.RecordBt.setText('Stop')
             video_name = self.RecordPath + 'video' + time.strftime('%Y%m%d%H%M%S',time.localtime(time.time())) + '.avi'
             if self.GrayCheck.isChecked():
@@ -265,9 +259,6 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.StopBt.setEnabled(False)
             self.ExitBt.setEnabled(False)
         
-        elif tag == 'Record':
-           # for i in range(1,10):
-            print(self.img)
 
         elif tag == 'Stop':
             self.RecordBt.setText('Record')
@@ -294,20 +285,27 @@ class CamShow(QMainWindow,Ui_CamShow):
         b_arr[:,0] = np.sum(img2RGB[int(self.roi_Y.text()):int(int(self.roi_Y.text())+ int(self.roi_Height.text())),:,2],0) / int(self.roi_Height.text())
         Gray_arr[:,0] = np.sum(gray[int(self.roi_Y.text()):int(int(self.roi_Y.text())+ int(self.roi_Height.text())), : ],0 )/ int(self.roi_Height.text())
         
-        self.SavePixel_arr = np.zeros((2560,2),dtype=np.int)  # SavePixel_arr 存Gray_arr
+        self.SavePixel_arr = np.zeros((2560,2),dtype=np.int)  # SavePixel_arr 存pixel和Gray_arr
         _index = [i for i in range(2560)]
         self.SavePixel_arr[:,0] = np.array(_index)
         self.SavePixel_arr[:,1] = Gray_arr[:,0]
-
-        
+ 
         self.avg = int(self.Avg_logout.text()) #user輸入平均次數
-        
+
         # 如果 getPixel_arr的長度大於10，就把第一筆資料刪除，固定只存10筆資料
         if len(self.getPixel_arr) >= self.avg:
             self.getPixel_arr.pop(0)
         self.getPixel_arr.append(self.SavePixel_arr)
+
+        self.add_arr = np.zeros((2560,1),dtype=np.float16) #add_arr=[] 存getPixel_arr相加的值
+        for arr2 in self.getPixel_arr:
+            for ii in range(2560):
+                self.add_arr[ii,0] = np.add(self.add_arr[ii,0], arr2[ii,1])
+        
+        self.AvgGray_arr = np.zeros((2560,1),dtype=np.float16)
+        for i in range(2560):
+            self.AvgGray_arr[i,0] = np.add_arr[ii,0] / self.avg
             
-    
 
         x = np.linspace(0,2560,2560)
         self.draw_2.setRange(xRange=[0,2560]) # 固定x軸 不會拉動
@@ -316,34 +314,28 @@ class CamShow(QMainWindow,Ui_CamShow):
         self.draw_2.plot(x, r_arr[:,0] , pen='r')
         self.draw_2.plot(x, g_arr[:,0] , pen='g')
         self.draw_2.plot(x, b_arr[:,0] , pen='b')
-        self.draw_2.plot(x,Gray_arr[:,0],pen='w')
+        self.draw_2.plot(x,self.AvgGray_arrGray_arr[:,0],pen='w')
+        #self.draw_2.plot(x,Gray_arr[:,0],pen='w')
 
         if self.GrayCheck.isChecked():
             self.draw_2.clear()
-            self.draw_2.plot(x,Gray_arr[:,0],pen='w')
+            self.draw_2.plot(x,self.AvgGray_arrGray_arr[:,0],pen='w')
+            #self.draw_2.plot(x,Gray_arr[:,0],pen='w')
 
 
     def calculate(self):
         self.not_open += 1
         pixel_array = []
         wave_array = []
-
-        
-
-        
-        
-        if self.P1.text():
-            #a1 = float(text[0])
+             
+        if self.P1.text():           
             a1 = float(self.P1.text())
-            pixel_array.append(a1)
-            #print("a1=",a1)
+            pixel_array.append(a1)          
             if self.W1.text():
                 b1 = float(self.W1.text())
-                wave_array.append(b1)
-                #print("b1=",b1)
+                wave_array.append(b1)            
 
         if self.P2.text():
-            #a2 = float(text[1])
             a2 = float(self.P2.text())
             pixel_array.append(a2)           
             if self.W2.text():
@@ -411,17 +403,15 @@ class CamShow(QMainWindow,Ui_CamShow):
         print(x)
         print(y)
         num = int(self.comboBox.currentText()) #冪次
-        parameter = np.polyfit(x,y,num)
+        parameter = np.polyfit(x,y,num) #求係數
         print(parameter)
-        print(parameter[0])
-        print(parameter[1])
-        line = np.poly1d(parameter)
+        #print(parameter[0])
+        line = np.poly1d(parameter) # 係數帶入方程式得line
         print(line)
         
-        #self.a0 = parameter[1]
-        #self.a1 = parameter[0]
+ 
         if num == 1:    
-            result = "a1係數:"+ str(parameter[0]) + "\n" + "a0係數:"+ str(parameter[1]) +"\n"+ "y=" + str(line) 
+            result = "一次方係數:"+ str(parameter[0]) + "\n" + "常數項係數:"+ str(parameter[1]) +"\n"+ "y=" + str(line) 
             self.results_window.setText(result)
             self.graphicsView.clear()
             self.graphicsView.plot(x,y,pen='g')
@@ -429,7 +419,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.p1 = parameter[1]
 
         if num == 2:
-            result = "a2係數:"+ str(parameter[0]) + "\n" + "a1係數:"+ str(parameter[1]) + "\n" + "a0係數:"+ str(parameter[2])  + "\n"+ "y=" + str(line)   
+            result = "二次方係數:"+ str(parameter[0]) + "\n" + "一次方係數:"+ str(parameter[1]) + "\n" + "常數項係數:"+ str(parameter[2])  + "\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
             self.graphicsView.plot(x,y,pen='g')
@@ -438,9 +428,8 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.p2 = parameter[2]
 
 
-
         if num == 3: 
-            result = "a3係數:"+ str(parameter[0]) + "\n" +"a2係數:"+ str(parameter[1]) + "\n" + "a1係數:"+ str(parameter[2]) + "\n" + "a0係數:"+ str(parameter[3]) +"\n"+ "y=" + str(line)   
+            result = "三次方係數:"+ str(parameter[0]) + "\n" +"二次方係數:"+ str(parameter[1]) + "\n" + "一次方係數:"+ str(parameter[2]) + "\n" + "常數項係數:"+ str(parameter[3]) +"\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
             self.graphicsView.plot(x,y,pen='g')
@@ -450,7 +439,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.p3 = parameter[3]
 
         if num == 4: 
-            result = "a4係數:"+ str(parameter[0]) + "\n" +"a3係數:"+ str(parameter[1]) + "\n" + "a2係數:"+ str(parameter[2]) + "\n" + "a1係數:"+ str(parameter[3]) +"\n"+ "a0係數:"+ str(parameter[4]) + "\n"+ "y=" + str(line)   
+            result = "四次方係數:"+ str(parameter[0]) + "\n" +"三次方係數:"+ str(parameter[1]) + "\n" + "二次方係數:"+ str(parameter[2]) + "\n" + "一次方係數:"+ str(parameter[3]) +"\n"+ "常數項係數:"+ str(parameter[4]) + "\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
             self.graphicsView.plot(x,y,pen='g')
@@ -461,7 +450,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.p4 = parameter[4]
 
         if num == 5: 
-            result = "a5係數:"+ str(parameter[0]) + "\n" +"a4係數:"+ str(parameter[1]) + "\n" + "a3係數:"+ str(parameter[2]) + "\n" + "a2係數:"+ str(parameter[3]) +"\n"+ "a1係數:"+ str(parameter[4]) + "\n"+ "a0係數:"+ str(parameter[5]) +  "\n" + "y=" + str(line)   
+            result = "五次方係數:"+ str(parameter[0]) + "\n" +"四次方係數:"+ str(parameter[1]) + "\n" + "三次方係數:"+ str(parameter[2]) + "\n" + "二次方係數:"+ str(parameter[3]) +"\n"+ "一次方係數:"+ str(parameter[4]) + "\n"+ "常數項係數:"+ str(parameter[5]) +  "\n" + "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
             self.graphicsView.plot(x,y,pen='g')
@@ -481,66 +470,50 @@ class CamShow(QMainWindow,Ui_CamShow):
         
         #初始化numpy arr   
         Gray_arr = np.zeros((2560,1),np.uint8)
-
-        Gray_arr[:,0] = np.sum(gray[int(self.roi_Y.text()):int(int(self.roi_Y.text())+ int(self.roi_Height.text())), : ],0 )/ int(self.roi_Height.text())
-        #for i in range(640):   
-            #Gray_arr[i,0] = np.sum(gray[260:280 , i ])/ int(self.roi_Height.text())
-            #print(Gray_arr)
-
-        #x_0 = self.a0 * 0 + self.a1
-        #x_640 =self.a0 * 640 + self.a1
-        #_x = np.linspace(x_0,x_640,640)
+        Gray_arr[:,0] = np.sum(gray[int(self.roi_Y.text()):int(int(self.roi_Y.text())+ int(self.roi_Height.text())), : ],0) / int(self.roi_Height.text())
 
         num = int(self.comboBox.currentText())
         if num == 1:
             x_0 = self.p0 * 0 + self.p1
             x_2560 =self.p0 * 2560 + self.p1
             _x = np.linspace(x_0,x_2560,2560)
-            #print( self.p0,self.p1,x_0)
-            #print(self.p0,self.p1,x_640)
-
+        
         if num == 2:
             #x_0 = self.p0 * 0 + self.p1 *0 + self.p2
             x_0 = math.pow(0,2)* self.p0 + self.p1 * 0 + self.p2
             #x_640 =self.p0 * 640 + self.p1 *640 + self.p2
-            x_640 = math.pow(2560,2) * self.p0 + self.p1 * 2560 + self.p2
-            _x = np.linspace(x_0,x_2560,2560)
-            #print( self.p0,self.p1,self.p2,x_0)
-            #print(self.p0,self.p1,self.p2,x_640)
+            x_640 = math.pow(2560,2) * self.p0 + math.pow(2560,1) * self.p1  + self.p2
+            _x = np.linspace(x_0,x_2560,2560)     
 
-        if num == 3:
-            #x_0 = self.p0 * 0 + self.p1 *0 + self.p2 *0 + self.p3
-            x_0 = math.pow(0,3)* self.p0 + math.pow(0,2)*self.p1 + math.pow(0,1)*self.p2 + self.p3
-            #x_640 =self.p0 * 640 + self.p1 *640 + self.p2 *640 + self.p3
+        if num == 3:            
+            x_0 = math.pow(0,3)*self.p0 + math.pow(0,2)*self.p1 + math.pow(0,1)*self.p2 + self.p3
             x_2560 = math.pow(2560,3)* self.p0 + math.pow(2560,2)*self.p1 + math.pow(2560,1)*self.p2 + self.p3
             _x = np.linspace(x_0,x_2560,2560)
 
-        if num == 4:
-            #x_0 = self.p0 * 0 + self.p1 *0 + self.p2 *0 + self.p3 *0 + self.p4
-            x_0 = math.pow(0,4)* self.p0 + math.pow(0,3)*self.p1 + math.pow(0,2)*self.p2 + math.pow(0,1)*self.p3 + self.p4
-            #x_640 =self.p0 * 640 + self.p1 *640 + self.p2 *640 + self.p3 *640 + self.p4
+        if num == 4:           
+            x_0 = math.pow(0,4)* self.p0 + math.pow(0,3)*self.p1 + math.pow(0,2)*self.p2 + math.pow(0,1)*self.p3 + self.p4          
             x_2560 = math.pow(2560,4)* self.p0 + math.pow(2560,3)*self.p1 + math.pow(2560,2)*self.p2 + math.pow(640,1)*self.p3 + self.p4
             _x = np.linspace(x_0,x_2560,2560)
 
-        if num == 5:
-            #x_0 = self.p0 * 0 + self.p1 *0 + self.p2 *0 + self.p3 *0 + self.p4 *0 + self.p5
+        if num == 5:       
             x_0 = math.pow(0,5)* self.p0 + math.pow(0,4)*self.p1 + math.pow(0,3)*self.p2 + math.pow(0,2)*self.p3 + math.pow(0,1)*self.p4 + self.p5
-            #x_640 =self.p0 * 640 + self.p1 *640 + self.p2 *640 + self.p3 *640 + self.p4 *640 + self.p5
             x_2560 = math.pow(2560,5)* self.p0 + math.pow(2560,4)*self.p1 + math.pow(2560,3)*self.p2 + math.pow(2560,2)*self.p3 + math.pow(2560,1)*self.p4 + self.p5
             _x = np.linspace(x_0,x_2560,2560)
      
 
-        self.save_arr = np.zeros((2560,2),dtype=np.uint32)  # save_arr存Gray_arr
-        
-        
-        
-        for i in range(640): 
-            #self.save_arr[i,0] = (x_640 - x_0) / 640 * (i + 1)
+        self.save_arr = np.zeros((2560,2),dtype=np.uint32)  # save_arr存pixel校正的波長及Gray_arr      
+        for i in range(2560): 
             self.save_arr[i,1] = Gray_arr[i,0]
             if num == 1:
                 self.save_arr[i,0] = self.p0 * i + self.p1
             if num == 2:
-                self.save_arr[i,0] =math.pow(i,2) * self.p0 + self.p1 * i + self.p2
+                self.save_arr[i,0] = math.pow(i,2) * self.p0 + self.p1 * i + self.p2
+            if num == 3:
+                self.save_arr[i,0] = math.pow(i,3) * self.p0 + math.pow(i,2) * self.p1 + self.p2 * i + self.p3
+            if num == 4:
+                self.save_arr[i,0] = math.pow(i,4) * self.p0 + math.pow(i,3) * self.p1 + math.pow(i,2) * self.p2 + self.p3 * i + self.p4
+            if num == 5:
+                self.save_arr[i,0] = math.pow(i,5) * self.p0 + math.pow(i,4) * self.p1 + math.pow(i,3) * self.p2 + math.pow(i,2) * self.p3 + self.p4 * i + self.p5
 
         self.avg = int(self.Avg_logout.text()) #user輸入平均次數
         
@@ -549,61 +522,51 @@ class CamShow(QMainWindow,Ui_CamShow):
             self.getSave_arr.pop(0)
         self.getSave_arr.append(self.save_arr)
         
-        #print(self.avg)
-            
-
-        
+                   
         self.y_arr = np.zeros((2560,1),dtype=np.float16)  #y_arr = [] #存 getSave_arr相加的值
         for arr in self.getSave_arr:
             for i in range(2560):
                 self.y_arr[i,0] = np.add(self.y_arr[i,0], arr[i,1])
             
 
-        self.Gray_arr = np.zeros((2560,1),dtype=np.float16)  
+        self.AvgGray_arr = np.zeros((2560,1),dtype=np.float16)  
         for i in range(2560):
-            self.Gray_arr[i,0] = self.y_arr[i,0]/ self.avg
+            self.AvgGray_arr[i,0] = self.y_arr[i,0]/ self.avg
         
         
         self.draw_3.setRange(xRange=[0,x_2560]) # 固定x軸 不會拉動
         self.draw_3.setRange(yRange=[np.amin(Gray_arr),np.amax(Gray_arr)]) # 固定y軸 不會拉動    
-        self.draw_3.plot(_x,self.Gray_arr[:,0],pen='w')
+        self.draw_3.plot(_x,self.AvgGray_arr[:,0],pen='w')
         
     
     
     def saveLog(self):
         fp = open('wavelength.txt' , 'w')
         fp2 = open('pixel.txt','w')
-        # for i in range(640):
-        #     fp.writelines(str(self.save_arr[i,0]) + ',' + str(self.save_arr[i,1]) + '\n')
        
-
         # 以下: 存波長對強度 
-        self.y_arr = np.zeros((2560,1),dtype=np.float16)  #y_arr = [] #存 getSave_arr相加的值
+        self.y_arr = np.zeros((2560,1),dtype=np.float16)  #y_arr=[] #存 getSave_arr相加的值
         for arr in self.getSave_arr:
             for i in range(2560):
                 self.y_arr[i,0] = np.add(self.y_arr[i,0], arr[i,1])
-                #fp.writelines(str(self.save_arr[i,0]) + ','+ str(arr[i,1]) + '\n') #存顯示(self.avg)筆資料
             
         for i in range(2560):
             fp.writelines(str(self.save_arr[i,0]) + ','+ str(self.y_arr[i,0]/self.avg) + '\n')
         
         # 以下:存pixcel對強度
-        self.add_arr = np.zeros((2560,1),dtype=np.float16)
+        self.add_arr = np.zeros((2560,1),dtype=np.float16) #add_arr=[] 存getPixel_arr相加的值
         for arr2 in self.getPixel_arr:
             for ii in range(2560):
                 self.add_arr[ii,0] = np.add(self.add_arr[ii,0], arr2[ii,1])
 
         for ii in range(2560):
             fp2.writelines(str(self.SavePixel_arr[ii,0]) + ',' + str(self.add_arr[ii,0]/self.avg) + '\n')
-            
-            
-            
-   
-          
+                   
         fp.close()
+        fp2.close()
         print('saving done!')
+    # 匯出的pixel和波長光譜數值，都是有平均過後的
     
-       
     def ExitApp(self):
         self.Timer.Stop()
         self.camera.release()
