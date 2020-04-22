@@ -414,7 +414,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             result = "一次方係數:"+ str(parameter[0]) + "\n" + "常數項係數:"+ str(parameter[1]) +"\n"+ "y=" + str(line) 
             self.results_window.setText(result)
             self.graphicsView.clear()
-            self.graphicsView.plot(x,y,pen='g')
+            self.graphicsView.plot(x,line(x),pen='g')
             self.p0 = parameter[0]
             self.p1 = parameter[1]
 
@@ -422,7 +422,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             result = "二次方係數:"+ str(parameter[0]) + "\n" + "一次方係數:"+ str(parameter[1]) + "\n" + "常數項係數:"+ str(parameter[2])  + "\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
-            self.graphicsView.plot(x,y,pen='g')
+            self.graphicsView.plot(x,line(x),pen='g')
             self.p0 = parameter[0]
             self.p1 = parameter[1]
             self.p2 = parameter[2]
@@ -432,7 +432,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             result = "三次方係數:"+ str(parameter[0]) + "\n" +"二次方係數:"+ str(parameter[1]) + "\n" + "一次方係數:"+ str(parameter[2]) + "\n" + "常數項係數:"+ str(parameter[3]) +"\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
-            self.graphicsView.plot(x,y,pen='g')
+            self.graphicsView.plot(x,line(x),pen='g')
             self.p0 = parameter[0]
             self.p1 = parameter[1]
             self.p2 = parameter[2]
@@ -442,7 +442,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             result = "四次方係數:"+ str(parameter[0]) + "\n" +"三次方係數:"+ str(parameter[1]) + "\n" + "二次方係數:"+ str(parameter[2]) + "\n" + "一次方係數:"+ str(parameter[3]) +"\n"+ "常數項係數:"+ str(parameter[4]) + "\n"+ "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
-            self.graphicsView.plot(x,y,pen='g')
+            self.graphicsView.plot(x,line(x),pen='g')
             self.p0 = parameter[0]
             self.p1 = parameter[1]
             self.p2 = parameter[2]
@@ -453,7 +453,7 @@ class CamShow(QMainWindow,Ui_CamShow):
             result = "五次方係數:"+ str(parameter[0]) + "\n" +"四次方係數:"+ str(parameter[1]) + "\n" + "三次方係數:"+ str(parameter[2]) + "\n" + "二次方係數:"+ str(parameter[3]) +"\n"+ "一次方係數:"+ str(parameter[4]) + "\n"+ "常數項係數:"+ str(parameter[5]) +  "\n" + "y=" + str(line)   
             self.results_window.setText(result)
             self.graphicsView.clear()
-            self.graphicsView.plot(x,y,pen='g')
+            self.graphicsView.plot(x,line(x),pen='g')
             self.p0 = parameter[0]
             self.p1 = parameter[1]
             self.p2 = parameter[2]
